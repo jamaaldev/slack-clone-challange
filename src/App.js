@@ -15,11 +15,11 @@ function App() {
           <MainSection>
             <Sidebar/>
             <Switch>
-              <Route path="/room">
+              <Route path="/">
                 {/* Chat Page */}
                 <Chat/>
               </Route>
-              <Route path="/">
+              <Route path="/login">
                 {/* Login Page */}
                 <Login/>
               </Route>
