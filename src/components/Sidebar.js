@@ -4,8 +4,20 @@ import ControlPointIcon from '@material-ui/icons/ControlPoint';
 import AddIcon from '@material-ui/icons/Add';
 import { SideBarItems } from './data/SidebarData';
 import { ChannelBarItem } from './data/ChannelData';
+import db from '../firebase';
 
-function Sidebar() {
+function Sidebar({rooms}) {
+
+const addChannel = () =>{
+    const prompName = prompt('Enter New Channel Name');
+    if(prompName){
+        console.log(prompName);
+       db.collection('rooms').add({
+           name:prompName,
+       })
+    }
+}
+
     return (
         <SidebarContainer>
           <WorkSpaceContainer>
@@ -27,18 +39,17 @@ function Sidebar() {
              }
           </MainChannels>
           <ChannelsContainer>
-             <NewChannelsContainer>
-                <div>
+             <NewChannelsContainer >
+                <div >
                     Channels
                 </div>
-             <AddIcon/>
+             <AddIcon onClick={addChannel}/>
              </NewChannelsContainer>
              <ChannelsList>
                 {
-                 ChannelBarItem.map(item => (
+                 rooms.map(item => (
                     <Channel>
-                     {item.icon}
-                     {item.text}
+                     # {item.name}
                      </Channel>
                     ))
                 } 
@@ -106,7 +117,17 @@ cursor: pointer;
 
 }
 > .MuiSvgIcon-root{
-    padding-right:12px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin-right:12px;
+
+    :hover{
+        background-color: var(--slack-color-sidebar);
+        border-radius:35px;
+        opacity:0.8;
+
+    }
 }
 `;
 

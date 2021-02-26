@@ -5,15 +5,35 @@ import MainHeader from './components/MainHeader';
 import Login from './components/Login';
 import styled from 'styled-components';
 import Sidebar from './components/Sidebar';
+import db from './firebase';
+import { useEffect } from 'react';
+import { useState } from 'react';
 
 function App() {
+
+const [rooms,setRooms] = useState([]);
+
+
+  const getChannels = () => {
+     db.collection('rooms').onSnapshot(snapshot => {
+      setRooms( snapshot.docs.map(channel => {
+          return {id: channel.id, name: channel.data().name }
+       }))
+    });
+  }
+
+  useEffect(() => {
+  getChannels()    
+  }, [])
+console.log(rooms);
+
   return (
     <div className="App">
       <Router>
         <AppContainer>
           <MainHeader/>
           <MainSection>
-            <Sidebar/>
+            <Sidebar rooms={rooms} />
             <Switch>
               <Route path="/">
                 {/* Chat Page */}

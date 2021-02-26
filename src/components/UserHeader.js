@@ -10,7 +10,7 @@ function UserHeader() {
                 Jamaal
             </Name>
             <UserImage>
-              <Avatar className="img" alt="Jamaal Hassan" src="/static/images/avatar/1.jpg" /> 
+              <Avatar className="img" alt="Jamaal Hassan" src={process.env.PUBLIC_URL + '/jmk.jpg'} /> 
             </UserImage>
         </UserContainer>
     )
