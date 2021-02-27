@@ -2,26 +2,26 @@ import React from 'react'
 import styled from 'styled-components'
 import Avatar from '@material-ui/core/Avatar'
 
-function ChatMessage() {
+function UserMessage({text,name,image,times}) {
     return (
         <ChatContainer>
          <UserAvatar>
-             <Avatar variant="rounded" className="Large" alt="Jamaal Hassan" src={process.env.PUBLIC_URL + '/jmk.jpg'} /> 
+             <Avatar variant="rounded" className="Large" alt={name} src={process.env.PUBLIC_URL + image} /> 
          </UserAvatar>
          <MessageContainer>
             <Name>
-            Jamaal Mahamed
-            <span>25/2/2021 2:27 PM</span>
+            {name}
+            <span>{new Date(times.toDate()).toUTCString()}</span>
             </Name>
             <Text>
-                This is The Best Challenge
+                {text}
             </Text>
         </MessageContainer>
         </ChatContainer>
     )
 }
 
-export default ChatMessage
+export default UserMessage
 
 const ChatContainer = styled.div`
 display:flex;

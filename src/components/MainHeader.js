@@ -3,11 +3,11 @@ import styled from 'styled-components'
 import SearchHeader from './SearchHeader';
 import UserHeader from './UserHeader';
 
-function MainHeader() {
+function MainHeader(props) {
     return (
         <MainContainerHeader>
             <SearchHeader/>
-            <UserHeader/>
+            <UserHeader signOut={props.signOut} user={props.user}/>
         </MainContainerHeader>
     )
 }

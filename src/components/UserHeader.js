@@ -3,14 +3,20 @@ import styled from 'styled-components';
 import Avatar from '@material-ui/core/Avatar';
 
 
-function UserHeader() {
+function UserHeader(props) {
+    console.log(props);
     return (
         <UserContainer>
             <Name>
-                Jamaal
+                {props.user.name}
             </Name>
-            <UserImage>
-              <Avatar className="img" alt="Jamaal Hassan" src={process.env.PUBLIC_URL + '/jmk.jpg'} /> 
+
+            <UserImage >
+              <Avatar  className="img" alt={props.user.name} src={process.env.PUBLIC_URL + props.user.photo} /> 
+              <SignOut onClick={props.signOut}>
+
+                SignOut
+              </SignOut>
             </UserImage>
         </UserContainer>
     )
@@ -30,7 +36,8 @@ padding-right:16px;
 
 `;
 const UserImage = styled.div`
-
+display:flex;
+align-items:center;
 
 > .img{
     color:blue;
@@ -38,11 +45,24 @@ const UserImage = styled.div`
     height:28px;
     border: 2px solid white;
     cursor: pointer;
-}
 :hover{
     background-color: var(--slack-color-secondry);
     opacity:0.8;
 
 }
+}
  
+`;
+const SignOut = styled.div`
+margin-right:5px;
+margin-left:5px;
+font-weight:500;
+padding:3px;
+cursor: pointer;
+:hover{
+    background-color: var(--slack-color-sidebar);
+    border-radius:4px;
+}
+
+
 `;

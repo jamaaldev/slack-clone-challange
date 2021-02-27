@@ -3,12 +3,12 @@ import styled from 'styled-components'
 import Star from '@material-ui/icons/Star';
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 
-function ChatHeater() {
+function ChatHeater({channelName}) {
     return (
         <ChatHeaterContainer>
             <TopHeader>
                 <ChannelNameTop>
-                 # clever
+                 # { channelName && channelName.name}
                  <Star/>
                 </ChannelNameTop>
                 <ChannelDetailTop>
