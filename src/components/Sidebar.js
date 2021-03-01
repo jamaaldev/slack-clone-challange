@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import ControlPointIcon from '@material-ui/icons/ControlPoint';
 import AddIcon from '@material-ui/icons/Add';
+import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import { SideBarItems } from './data/SidebarData';
 import { ChannelBarItem } from './data/ChannelData';
 import db from '../firebase';
@@ -26,6 +27,19 @@ const addChannel = () =>{
            name:prompName,
        })
     }
+}
+
+
+const deleteChannel = (id) =>{
+console.log('delete');
+db.collection("rooms").doc(id).delete().then(() => {
+    console.log("Document successfully deleted!");
+    history.push('/DeleteChannelPage');
+
+}).catch((error) => {
+    console.error("Error removing document: ", error);
+});
+
 }
 
     return (
@@ -60,9 +74,16 @@ const addChannel = () =>{
                  rooms.map(item => (
                     <Channel onClick={()=> goToChannel(item.id)}>
                      # {item.name}
+                     <IconDeleteContainer  key={item.id} onClick={()=>deleteChannel(item.id)}>
+                     
+                     <DeleteForeverIcon/> 
+
+                     </IconDeleteContainer>
+
                      </Channel>
                     ))
-                } 
+                }
+
              </ChannelsList>
           </ChannelsContainer>
         </SidebarContainer>
@@ -143,13 +164,15 @@ cursor: pointer;
 
 const ChannelsList = styled.div`
 
+
 `;
 
 const Channel = styled.div`
 display:flex;
 align-items:center;
 padding-left:22px;
-
+justify-content:space-between;
+margin-right:15px;
 cursor: pointer;
 height:38px;
 
@@ -177,4 +200,24 @@ cursor: pointer;
     opacity:0.8;
 
 }
+`;
+
+const IconDeleteContainer = styled.div`
+display:flex;
+border-radius:30px;
+margin-right:5px;
+
+> .MuiSvgIcon-root{
+        padding:3px;
+    :hover{
+        color:red;
+        background-color:red;
+        color:white;
+        border-radius:30px;
+        cursor:alias;
+
+
+    }
+}
+
 `;

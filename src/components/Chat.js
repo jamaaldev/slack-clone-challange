@@ -6,6 +6,7 @@ import UserMessage from './UserMessage';
 import db from '../firebase';
 import { useParams } from 'react-router-dom';
 import  firebase from 'firebase';
+import DeleteChannelPage from './DeleteChannelPage';
 
 function Chat({user}) {
 
@@ -40,6 +41,7 @@ function Chat({user}) {
 
     }
 
+   
 
     const getChannels = () =>{
         db.collection('rooms')

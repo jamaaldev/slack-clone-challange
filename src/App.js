@@ -9,6 +9,7 @@ import db from './firebase';
 import { useEffect } from 'react';
 import { useState } from 'react';
 import {auth,provider} from './firebase';
+import DeleteChannelPage from './components/DeleteChannelPage';
 function App() {
 
 const [rooms,setRooms] = useState([]);
@@ -30,7 +31,7 @@ const signOut = () =>{
 }
 
   useEffect(() => {
-  getChannels()    
+  getChannels() 
   }, [])
 console.log(rooms);
 
@@ -50,7 +51,11 @@ console.log(rooms);
                 {/* Chat Page */}
                 <Chat user={user} />
               </Route>
-              <Route path="/login">
+              <Route path="/DeleteChannelPage">
+              {/* The Channel Has Been Deleted, */}
+              <DeleteChannelPage/>
+              </Route>
+              <Route path="/Login">
                 {/* Login Page */}
                 <Login/>
               </Route>
