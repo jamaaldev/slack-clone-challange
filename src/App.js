@@ -51,13 +51,13 @@ console.log(rooms);
                 {/* Chat Page */}
                 <Chat user={user} />
               </Route>
-              <Route path="/DeleteChannelPage">
-              {/* The Channel Has Been Deleted, */}
-              <DeleteChannelPage/>
-              </Route>
               <Route path="/Login">
                 {/* Login Page */}
                 <Login/>
+              </Route>
+              <Route path="/DeleteChannelPage">
+              {/* The Channel Has Been Deleted, */}
+              <DeleteChannelPage/>
               </Route>
               <Route path="/">
                 Select Channel on The SideBar or Create New Channel +

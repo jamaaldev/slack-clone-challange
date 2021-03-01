@@ -74,7 +74,7 @@ db.collection("rooms").doc(id).delete().then(() => {
                  rooms.map(item => (
                     <Channel onClick={()=> goToChannel(item.id)}>
                      # {item.name}
-                     <IconDeleteContainer  key={item.id} onClick={()=>deleteChannel(item.id)}>
+                     <IconDeleteContainer   onClick={()=>deleteChannel(item.id)}>
                      
                      <DeleteForeverIcon/> 
 
