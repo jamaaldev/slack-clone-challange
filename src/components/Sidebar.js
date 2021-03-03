@@ -1,4 +1,3 @@
-import React from 'react'
 import styled from 'styled-components'
 import ControlPointIcon from '@material-ui/icons/ControlPoint';
 import AddIcon from '@material-ui/icons/Add';
@@ -8,40 +7,78 @@ import { ChannelBarItem } from './data/ChannelData';
 import db from '../firebase';
 import {useHistory} from 'react-router-dom';
 
-function Sidebar({rooms}) {
 
-const history = useHistory();
+function Sidebar({rooms,user,admin,userInfo,getData}) {
 
-const goToChannel = (id) =>{
-    console.log(id);
-    if(id){
-        history.push(`/room/${id}`)
+    const history = useHistory();
+    
+    const goToChannel = (id) =>{
+        console.log(id);
+        if(id){
+            history.push(`/room/${id}`)
+        }
     }
-}
-
-const addChannel = () =>{
-    const prompName = prompt('Enter New Channel Name');
-    if(prompName){
-        console.log(prompName);
-       db.collection('rooms').add({
-           name:prompName,
-       })
+    
+    const addChannel = () =>{
+        const prompName = prompt('Enter New Channel Name');
+        if(prompName){
+            console.log(prompName);
+            db.collection('rooms').add({
+                name:prompName,
+            })
+        }
     }
-}
+    
+    const deleteChannel = (id) =>{
+        console.log('delete triger',id);
+        console.log('not deleted becuase you are not alloweds',userInfo);
 
+            db.collection('users')
+            .doc(admin).get().then(doc => {
+                return  doc.data();
+            }).then(datas =>{
+                console.log('wowowo',datas);
+                
+                 if( datas.admin === true ){
+                    db.collection("rooms").doc(id).delete().then(() => {
+                        console.log("Document successfully deleted!");
+                        history.push('/DeleteChannelPage');
+                        
+                    }).catch((error) => {
+                        console.error("Error removing document: ", error);
+                    });
+                } 
+                 if(datas.admin === false) {
+                    alert('request full admin')
+                    history.push('/RequestDelete');
 
-const deleteChannel = (id) =>{
-console.log('delete');
-db.collection("rooms").doc(id).delete().then(() => {
-    console.log("Document successfully deleted!");
-    history.push('/DeleteChannelPage');
+                }
+                
+            }).catch(err => {
+                console.log(err,'user',user.uid,'admin',admin);
+                alert('click to send you another page to request a delete function',user.uid)
+                history.push('/RequestDelete');
 
-}).catch((error) => {
-    console.error("Error removing document: ", error);
-});
-
-}
-
+            })
+            
+       
+        
+        
+        
+        
+    }
+    const requestPage = () => {
+        db.collection("users").doc(user.uid).update({admin:true}).then(() => {
+            console.log("Document successfully deleted!",user.uid);
+            history.push('/RequestDelete');
+            
+        }).catch((error) => {
+            console.error("Error removing document: ", error);
+        });
+        console.log('am inside');
+        
+    }
+    
     return (
         <SidebarContainer>
           <WorkSpaceContainer>
@@ -52,16 +89,16 @@ db.collection("rooms").doc(id).delete().then(() => {
                 <ControlPointIcon/>
             </NewMessage>
           </WorkSpaceContainer>
-          <MainChannels>
+          <MainChannels >
              {
-                 SideBarItems.map(item => (
-                    <MainChannelItem>
+                 SideBarItems.map((item,id) => (
+                    <MainChannelItem  key={id} >
                         {item.icon}
                         {item.text}
                     </MainChannelItem>
                  ))
              }
-          </MainChannels>
+          </MainChannels >
           <ChannelsContainer>
              <NewChannelsContainer >
                 <div >
@@ -72,9 +109,9 @@ db.collection("rooms").doc(id).delete().then(() => {
              <ChannelsList>
                 {
                  rooms.map(item => (
-                    <Channel onClick={()=> goToChannel(item.id)}>
+                    <Channel key={item.id} onClick={()=> goToChannel(item.id) }>
                      # {item.name}
-                     <IconDeleteContainer   onClick={()=>deleteChannel(item.id)}>
+                     <IconDeleteContainer   onClick={()=>  deleteChannel(item.id) }>
                      
                      <DeleteForeverIcon/> 
 

@@ -10,11 +10,15 @@ import { useEffect } from 'react';
 import { useState } from 'react';
 import {auth,provider} from './firebase';
 import DeleteChannelPage from './components/DeleteChannelPage';
-function App() {
+import RequestDelete from './components/RequestDelete';
 
+function App() {
+const [admin,setAdmin] = useState([]);
+const [userInfo,setUserInfo] = useState([]);
 const [rooms,setRooms] = useState([]);
 const [user,setUser] = useState(JSON.parse(localStorage.getItem('user')));
-
+console.log('adminsnss',admin);
+console.log('adminiIfno',userInfo,user);
 
 const getChannels = () => {
   db.collection('rooms').onSnapshot(snapshot => {
@@ -30,22 +34,35 @@ const signOut = () =>{
   })
 }
 
-  useEffect(() => {
-  getChannels() 
+const getData = () => {
+  console.log('myget',admin);
+
+  db.collection('users')
+  .doc(admin).get().then(doc => {
+    return  doc.data();
+  }).then(datas =>{
+      console.log('wowowo',datas);
+      setUserInfo(datas)
+  })
+  
+  
+}
+
+useEffect(() => {
+  getChannels()
   }, [])
-console.log(rooms);
 
   return (
     <div className="App">
       <Router>
         {  
         !user ? 
-        <Login setUser={setUser}/> :
+        <Login   setAdmin={setAdmin} setUser={setUser}/> :
       
         <AppContainer>
           <MainHeader signOut={signOut} user={user}/>
           <MainSection>
-            <Sidebar rooms={rooms} />
+            <Sidebar userInfo={userInfo}  admin={admin} rooms={rooms} user={user}/>
             <Switch>
               <Route path="/room/:channelId">
                 {/* Chat Page */}
@@ -53,7 +70,12 @@ console.log(rooms);
               </Route>
               <Route path="/Login">
                 {/* Login Page */}
-                <Login/>
+                <Login  getData={getData} />
+              </Route>
+              <Route path="/RequestDelete">
+              {/* Request Deleted, */}
+                
+               <RequestDelete admin={admin} />
               </Route>
               <Route path="/DeleteChannelPage">
               {/* The Channel Has Been Deleted, */}

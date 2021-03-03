@@ -23,10 +23,10 @@ setInput('');
             </form>
             <IconContainer>
                 {
-                    InputBarItems.map(item => (
-                        <inputIconContainer>
+                    InputBarItems.map((item,index) => (
+                        <InputIconContainer key={index}>
                          {item.icon}
-                        </inputIconContainer>
+                        </InputIconContainer>
                     ))
                 }
             </IconContainer>
@@ -95,8 +95,14 @@ display:flex;
 background-color: var(--slack-color-op);
 
 
-> inputIconContainer{
-    display:flex;
+
+ 
+
+`;
+
+const InputIconContainer = styled.div`
+
+display:flex;
     align-items:center;
     padding:10px 10px;
     font-size:35px;
@@ -118,5 +124,6 @@ background-color: var(--slack-color-op);
  }
  
 }
-}
+
+
 `;

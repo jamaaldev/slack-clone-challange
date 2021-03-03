@@ -5,12 +5,12 @@ function DeleteChannelPage() {
     return (
         <DeleleContainer>
             <TitleDeleteInfo>
-            Your Channel Has Been Deleted Please Choose Other Channel on The Left SideBar,
+             Your Channel Has Been Deleted Please Choose Other Channel on The Left SideBar,
+            </TitleDeleteInfo>
             <UnderConstructor>
-            Under Construction Style For This Page
+             Under Construction Style For This Page
             </UnderConstructor>
 
-            </TitleDeleteInfo>
 
         </DeleleContainer>
     )
@@ -24,5 +24,9 @@ background-color: var(--slack-color-in);
 
 `;
 
-const TitleDeleteInfo = styled.h2``;
-const UnderConstructor = styled.h2``;
+const TitleDeleteInfo = styled.h2`
+color:red;
+`;
+const UnderConstructor = styled.h3`
+color:green;
+`;

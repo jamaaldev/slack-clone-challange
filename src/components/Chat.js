@@ -6,7 +6,6 @@ import UserMessage from './UserMessage';
 import db from '../firebase';
 import { useParams } from 'react-router-dom';
 import  firebase from 'firebase';
-import DeleteChannelPage from './DeleteChannelPage';
 
 function Chat({user}) {
 
@@ -35,6 +34,8 @@ function Chat({user}) {
             timestamp: firebase.firestore.Timestamp.now(),
             user: user.name,
             userImage: user.photo,
+            admin:false,
+            userLevel:0,
             }
             db.collection("rooms").doc(channelId).collection("messages").add(payload);
         }
@@ -68,7 +69,7 @@ function Chat({user}) {
                 {
                     messages.length > 0 &&
                     messages.map((data,index)=>(
-                        <UserMessage 
+                        <UserMessage key={index}
                         text={data.text}
                         name={data.user}
                         image={data.userImage}

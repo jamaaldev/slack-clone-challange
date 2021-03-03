@@ -1,23 +1,31 @@
 import React from 'react'
 import styled from 'styled-components';
-import {auth,provider} from '../firebase'
-function Login(props) {
+import db, {auth,provider} from '../firebase'
+function Login({setUser,setAdmin}) {
 
     const SignIn = () => {
         auth.signInWithPopup(provider).then((result)=>{
+            
+            console.log(result);
             const newUser = {
                 name: result.user.displayName,
                 photo: result.user.photoURL,
+                uid:   result.user.uid,
             }
             localStorage.setItem('user', JSON.stringify(newUser));
-
-           props.setUser(newUser);
+            setUser(newUser);
+            setAdmin(result.user.uid);
         }).catch((error) => {
             console.log('error login',error);
             alert(error);
         })
     }
 
+  
+
+ 
+    
+    
     return (
         <LoginContainer>
             <Content>
